@@ -1,17 +1,23 @@
  # 
  # 土屋 賢治 2022. 
- # Ingestion class for the CSV Kenya macro files 
-
+ # factory module
+setwd(paste(getwd(),"/data_ingestion/", sep=""))
 source("ingestion.R")
 source("validators.R")
 source("transformation.R")
+source("../utils.R")
 library(dplyr)
 library(logger)
 
+run_ingestion <- function(){
 
  sleep_func <- function() { Sys.sleep(5) } 
  startTime <- Sys.time()
  sleep_func()
+ 
+ #Step 0: cleaning of the directory folder
+ 
+ delete_folder_if_empty("../../../data/transformed/")
  
  #Step 1: Ingestion of economic data
  
@@ -144,7 +150,7 @@ library(logger)
   economic_dataset <- merge(economic_dataset,  public_sector_indicators ,by = "year", all.x = TRUE) 
   economic_dataset <- merge(economic_dataset,  rural_sector_indicators ,by = "year", all.x = TRUE) 
   economic_dataset <- merge(economic_dataset,  exchange_rate ,by = "year", all.x = TRUE) 
-  
+
  
 #Step 1.c: export of economic data
   
@@ -279,14 +285,14 @@ startTime <- Sys.time()
 sleep_func()
 
 
-health_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/aid/aid-effectiveness.csv.csv'),
+aid_indicators <- refactor_unique_columns(
+  dataframe=ingest_csv_factory('../../../data/raw/aid/aid-effectiveness.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
 )
 
-write.csv(  social_development_indicators,'../../../data/transformed/aid_data.csv')
+write.csv(aid_indicators,'../../../data/transformed/aid_data.csv')
 
 endTime <- Sys.time()
 runtime <- endTime - startTime
@@ -296,3 +302,5 @@ log_info(str_interp("Transformation of the social dataset completed in ${runtime
 check_csv_file_not_empty('../../../data/transformed/aid_data.csv')
 check_csv_file_not_empty('../../../data/transformed/data_social.csv')
 check_csv_file_not_empty('../../../data/transformed/data_economics.csv')
+
+}

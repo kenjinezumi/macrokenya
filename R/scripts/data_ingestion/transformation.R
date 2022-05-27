@@ -1,7 +1,6 @@
 # 
 # 土屋 賢治 2022. 
-# Ingestion class for the CSV Kenya macro files 
-
+# transformation module
 source("ingestion.R")
 source("validators.R")
 library(dplyr)

@@ -1,9 +1,6 @@
 # 
 # 土屋 賢治 2022. 
-# Ingestion class for the CSV Kenya macro files 
-install.packages(c('logger',
-                   'stringr'),
-                 repos = "http://cran.us.r-project.org")
+# ingestion module
 library(logger)
 library(stringr)
 source("validators.R")
