@@ -1,8 +1,7 @@
 # 
 # 土屋 賢治 2022. 
 # Stats module for the CSV Kenya macro files 
-setwd(paste(getwd(),"/data_analysis/", sep=""))
-source("commons.R")
+source("data_analysis/commons.R")
 library(dplyr) 
 library(corpcor)
 library(tidyverse)
@@ -20,9 +19,10 @@ run_stats_analysis <- function(type_of_data){
   } else if(type_of_data == 'economic'){
     exclusion <- c('SOCIAL', 'AID')
   } else {exclusion <- "completelyrandomandinappropriatename"}
-  
-  df <- ingest_csv_file("../../../data/final/main_universe.csv") 
+  df <- ingest_csv_file("../../data/final/main_universe.csv") 
+
   rownames(df) <- df$year
+  
   df <- select(df,-c('year', 'X'))
 
   lambdas = 10^seq(3, -2, by = -.1)
@@ -50,7 +50,9 @@ run_stats_analysis <- function(type_of_data){
     coef    = coef[ which(coef> 0 ) ]  #intercept included
   )
   
-  write.csv(as.data.frame(coef), str_interp('../../../data/forecast/coefficients_${type_of_data}.csv'))
+  write.csv(as.data.frame(coef), str_interp('../../data/forecast/coefficients_${type_of_data}.csv'))
+  log_info("Saved the coefficients.")
+  
 }
 
 holt_winter <- function(data, i){
@@ -66,28 +68,31 @@ holt_winter <- function(data, i){
 }
 
 run_mass_holt_winter <- function(){
+  log_info("Running the Holt Winter.")
   
-  social_coefficients <- ingest_csv_file("../../../data/forecast/coefficients_social.csv") 
-  economic_coefficients <- ingest_csv_file("../../../data/forecast/coefficients_economic.csv") 
-  aid_coefficients <-  ingest_csv_file("../../../data/forecast/coefficients_aid.csv") 
-  df <- ingest_csv_file("../../../data/final/main_universe.csv") 
+  social_coefficients <- ingest_csv_file("../../data/forecast/coefficients_social.csv") 
+  economic_coefficients <- ingest_csv_file("../../data/forecast/coefficients_economic.csv") 
+  aid_coefficients <-  ingest_csv_file("../../data/forecast/coefficients_aid.csv") 
+  df <- ingest_csv_file("../../data/final/main_universe.csv") 
   features <- c(colnames(social_coefficients), colnames(economic_coefficients),colnames(aid_coefficients))
   num_col <-length(colnames(social_coefficients)) + length(colnames(aid_coefficients)) + length(colnames(economic_coefficients))
   output <- data.frame(matrix(ncol=num_col, nrow=nrow(df) + 10))
   complete <- dplyr::bind_rows(social_coefficients, economic_coefficients)
   complete <- dplyr::bind_rows(complete, aid_coefficients)
-  write.csv(complete, str_interp('../../../data/forecast/check_DAT.csv'))
-  
+
   #Step 1:  running holt winter on all data
   
   for(i in complete$features){
-    
+    if(i %in% colnames(df)){
+    log_info("Check the results.")
     results<- holt_winter(df[i], i)
-    output[i] <- dplyr::bind_rows(df[i], results)
+    output[i] <- dplyr::bind_rows(df[i], results)}
 
   }
   
   #We add the GNI data
+  log_info("Running the Holt Winter.")
+  
   
   results <- holt_winter(df["ECONOMIC_GNI..current.US...x"], "ECONOMIC_GNI..current.US...x")
   output["ECONOMIC_GNI..current.US...x"] <- dplyr::bind_rows(df["ECONOMIC_GNI..current.US...x"], results)
@@ -102,11 +107,7 @@ run_mass_holt_winter <- function(){
   output['X8'] <- NULL
   output['X9'] <- NULL
   
-  write.csv(output, str_interp('../../../data/forecast/forecasted_DAT.csv'))
+  write.csv(output, str_interp('../../data/forecast/forecasted_DAT.csv'))
   
 }
 
-
-run_arima <- function(x){
-  
-}

@@ -1,8 +1,8 @@
 # 
 # 土屋 賢治 2022. 
 # transformation module
-source("ingestion.R")
-source("validators.R")
+source("data_ingestion/ingestion.R")
+source("data_ingestion/validators.R")
 library(dplyr)
 library(logger)
 

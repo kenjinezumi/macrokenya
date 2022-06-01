@@ -1,11 +1,11 @@
  # 
  # 土屋 賢治 2022. 
  # factory module
-setwd(paste(getwd(),"/data_ingestion/", sep=""))
-source("ingestion.R")
-source("validators.R")
-source("transformation.R")
-source("../utils.R")
+print(getwd())
+source("data_ingestion/ingestion.R")
+source("data_ingestion/validators.R")
+source("data_ingestion/transformation.R")
+source("utils.R")
 library(dplyr)
 library(logger)
 
@@ -17,14 +17,14 @@ run_ingestion <- function(){
  
  #Step 0: cleaning of the directory folder
  
- delete_folder_if_empty("../../../data/transformed/")
+ delete_folder_if_empty("../../data/transformed/")
  
  #Step 1: Ingestion of economic data
  
  log_info("Transforming the economic dataset.")
  
   economic_dataset <- refactor_unique_columns(
-    dataframe=ingest_csv_factory('../../../data/raw/economics/economic_data.csv'),
+    dataframe=ingest_csv_factory('../../data/raw/economics/economic_data.csv'),
     column_to_check="Indicator.Name",
     date_index="Year",
     column_values="Value"
@@ -33,7 +33,7 @@ run_ingestion <- function(){
   log_info("Transforming the trade indicators dataset.")
   
   trade_indicators <- refactor_unique_columns(
-    dataframe=ingest_csv_factory('../../../data/raw/economics/trade.csv'),
+    dataframe=ingest_csv_factory('../../data/raw/economics/trade.csv'),
     column_to_check="Indicator.Name",
     date_index = "Year",
     column_values = "Value"
@@ -42,7 +42,7 @@ run_ingestion <- function(){
   log_info("Transforming the deflator dataset.")
   
   deflator_dataset <- refactor_unique_columns(
-    dataframe=ingest_csv_factory('../../../data/raw/economics/deflators_data_prices.csv'),
+    dataframe=ingest_csv_factory('../../data/raw/economics/deflators_data_prices.csv'),
     column_to_check="Element",
     date_index = "Year",
     column_values = "Value"
@@ -51,7 +51,7 @@ run_ingestion <- function(){
   log_info("Transforming the mining dataset.")
   
   mining_dataset <- refactor_unique_columns(
-      dataframe=ingest_csv_factory('../../../data/raw/economics/energy_mining.csv'),
+      dataframe=ingest_csv_factory('../../data/raw/economics/energy_mining.csv'),
       column_to_check="Indicator.Name",
       date_index = "Year",
       column_values = "Value"
@@ -68,7 +68,7 @@ run_ingestion <- function(){
   log_info("Transforming the external debt dataset.")
   
   external_debt_indicators <- refactor_unique_columns(
-         dataframe=ingest_csv_factory('../../../data/raw/economics/external_debt.csv'),
+         dataframe=ingest_csv_factory('../../data/raw/economics/external_debt.csv'),
          column_to_check="Indicator.Name",
          date_index = "Year",
          column_values = "Value"
@@ -78,7 +78,7 @@ run_ingestion <- function(){
   
  
   financial_indicators <- refactor_unique_columns(
-          dataframe=ingest_csv_factory('../../../data/raw/economics/financial_sector.csv'),
+          dataframe=ingest_csv_factory('../../data/raw/economics/financial_sector.csv'),
           column_to_check="Indicator.Name",
           date_index = "Year",
           column_values = "Value"
@@ -87,7 +87,7 @@ run_ingestion <- function(){
   log_info("Transforming the patent technology dataset.")
   
   patent_indicators <- refactor_unique_columns(
-    dataframe=ingest_csv_factory('../../../data/raw/economics/patent_technology.csv'),
+    dataframe=ingest_csv_factory('../../data/raw/economics/patent_technology.csv'),
     column_to_check="Indicator.Name",
     date_index = "Year",
     column_values = "Value"
@@ -97,7 +97,7 @@ run_ingestion <- function(){
   
  
   private_sector_indicators <- refactor_unique_columns(
-    dataframe=ingest_csv_factory('../../../data/raw/economics/private_sector.csv'),
+    dataframe=ingest_csv_factory('../../data/raw/economics/private_sector.csv'),
     column_to_check="Indicator.Name",
     date_index = "Year",
     column_values = "Value"
@@ -107,7 +107,7 @@ run_ingestion <- function(){
   
  
   public_sector_indicators <- refactor_unique_columns(
-     dataframe=ingest_csv_factory('../../../data/raw/economics/public_sector.csv'),
+     dataframe=ingest_csv_factory('../../data/raw/economics/public_sector.csv'),
      column_to_check="Indicator.Name",
      date_index = "Year",
      column_values = "Value"
@@ -117,7 +117,7 @@ run_ingestion <- function(){
   
   
   rural_sector_indicators <- refactor_unique_columns(
-     dataframe=ingest_csv_factory('../../../data/raw/economics/rural_activity.csv'),
+     dataframe=ingest_csv_factory('../../data/raw/economics/rural_activity.csv'),
      column_to_check="Indicator.Name",
      date_index = "Year",
      column_values = "Value"
@@ -127,7 +127,7 @@ run_ingestion <- function(){
   
  
   exchange_rate <- refactor_unique_columns(
-    dataframe=ingest_csv_factory('../../../data/raw/economics/exchange_rate.csv'),
+    dataframe=ingest_csv_factory('../../data/raw/economics/exchange_rate.csv'),
     column_to_check="Item",
     date_index = "Year",
     column_values = "Value"
@@ -156,7 +156,7 @@ run_ingestion <- function(){
   
  log_info("Exporting economic data.")
   
- write.csv(  economic_dataset,'../../../data/transformed/data_economics.csv')
+ write.csv(  economic_dataset,'../../data/transformed/data_economics.csv')
   endTime <- Sys.time()
   runtime <- endTime - startTime
   log_info(str_interp("Transformation of the economic dataset completed in ${runtime}"))
@@ -172,7 +172,7 @@ sleep_func()
 log_info("Starting ingestion of the social develop dataset.")
 
 social_development_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/social_development.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/social_development.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -182,7 +182,7 @@ log_info("Starting ingestion of the social protection dataset.")
 
 
 social_protection_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/social_protection.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/social_protection.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -192,7 +192,7 @@ log_info("Starting ingestion of the urban development dataset.")
 
 
 urban_development_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/urban_development.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/urban_development.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -202,7 +202,7 @@ log_info("Starting ingestion of the education dataset.")
 
 
 education_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/education.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/education.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -212,7 +212,7 @@ log_info("Starting ingestion of the gender dataset.")
 
 
 gender_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/gender.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/gender.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -222,7 +222,7 @@ log_info("Starting ingestion of the health dataset.")
 
 
 health_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/health.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/health.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -232,7 +232,7 @@ log_info("Starting ingestion of the infrastructure dataset.")
 
 
 infrastructure_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/infrastructure.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/infrastructure.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -242,7 +242,7 @@ log_info("Starting ingestion of the poverty dataset.")
 
 
 poverty_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/poverty.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/poverty.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -252,7 +252,7 @@ log_info("Starting ingestion of the environment dataset.")
 
 
 environment_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/social/environment.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/social/environment.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
@@ -269,7 +269,7 @@ social_development_indicators <- merge( social_development_indicators, poverty_i
 social_development_indicators <- merge( social_development_indicators, environment_indicators,by = "year", all.x = TRUE)  
 
 
-write.csv(  social_development_indicators,'../../../data/transformed/data_social.csv')
+write.csv(  social_development_indicators,'../../data/transformed/data_social.csv')
 
 
 endTime <- Sys.time()
@@ -286,21 +286,21 @@ sleep_func()
 
 
 aid_indicators <- refactor_unique_columns(
-  dataframe=ingest_csv_factory('../../../data/raw/aid/aid-effectiveness.csv'),
+  dataframe=ingest_csv_factory('../../data/raw/aid/aid-effectiveness.csv'),
   column_to_check="Indicator.Name",
   date_index = "Year",
   column_values = "Value"
 )
 
-write.csv(aid_indicators,'../../../data/transformed/aid_data.csv')
+write.csv(aid_indicators,'../../data/transformed/aid_data.csv')
 
 endTime <- Sys.time()
 runtime <- endTime - startTime
 log_info(str_interp("Transformation of the social dataset completed in ${runtime}"))
 
 
-check_csv_file_not_empty('../../../data/transformed/aid_data.csv')
-check_csv_file_not_empty('../../../data/transformed/data_social.csv')
-check_csv_file_not_empty('../../../data/transformed/data_economics.csv')
+check_csv_file_not_empty('../../data/transformed/aid_data.csv')
+check_csv_file_not_empty('../../data/transformed/data_social.csv')
+check_csv_file_not_empty('../../data/transformed/data_economics.csv')
 
 }

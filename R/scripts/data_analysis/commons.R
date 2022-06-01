@@ -106,7 +106,7 @@ get_logs_summary <- function(dataframe, output_filename){
     df["Potential_outlier", i] = get_outliers_count(as.numeric(na.omit(unlist(dataframe[i]))))
   }
   df <- t(df)
-  write.csv(df ,str_interp('../../../data/summary/${output_filename}'))
+  write.csv(df ,str_interp('../../data/summary/${output_filename}'))
 }
 
 

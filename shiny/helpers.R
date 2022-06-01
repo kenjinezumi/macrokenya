@@ -1,9 +1,8 @@
 # 
 # 土屋 賢治 2022. 
-# ingestion module
+# Helpers
 library(logger)
 library(stringr)
-source("data_ingestion/validators.R")
 
 ingest_csv_file <- function(file_path_string){
   log_info(str_interp("Ingesting the file ${file_path_string}"))
@@ -27,13 +26,3 @@ ingest_csv_file <- function(file_path_string){
   return(df)
   
 }
-
-ingest_csv_factory <- function(file_path_string){
-  log_info(str_interp("Starting the task factory for data-ingestion"))
-  if(validate_file_exists(file_path_string)){
-      return(ingest_csv_file(file_path_string))
-    }else{
-      log_info(str_interp("Skipping the file ${file_path_string}")) 
-    }
-}
-  
