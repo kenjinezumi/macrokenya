@@ -3,4 +3,5 @@ install.packages(c("shiny","shinydashboard", "ggplot2", "dplyr","reshape2", "plo
 library(shiny)
 library(here)
 
-runApp("shiny")
+runApp("shiny", 
+       port=8080, host='127.0.0.1')

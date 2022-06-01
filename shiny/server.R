@@ -149,7 +149,12 @@ observe({
           difference[j] = difference[j] * temp_[,"coef"]
           if(y >= 0){
             new_forecast["ECONOMIC_GNI..current.US...x"] = new_forecast["ECONOMIC_GNI..current.US...x"]  + difference[i] - features_forecast_data[i]
-          }else{
+          }else if(y == 0){
+            
+            new_forecast["ECONOMIC_GNI..current.US...x"] = to_be_melted_y["ECONOMIC_GNI..current.US...x"] 
+            
+          }
+            else{
             new_forecast["ECONOMIC_GNI..current.US...x"] = new_forecast["ECONOMIC_GNI..current.US...x"]  - difference[i] - features_forecast_data[i]
             
             
