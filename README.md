@@ -1,5 +1,5 @@
 <h1>Macrokenya (1960-2018)</h1>
-Macro-kenya is a quick proof of concept built in May 2022. 
+Macro-kenya is a quick R Shiny proof of concept built in May 2022. 
 It aims to conceptualise the contributions of different social, economic and international factors to the Gross National Income of Kenya. 
 
 The data is sourced from the Kenyan data portal: https://kenya.opendataforafrica.org. 
