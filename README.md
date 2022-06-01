@@ -8,16 +8,16 @@ example:
 
 <img src="res/macrokenya.png">
 
-##The approach
+<h3>The approach</h3>
 Over 5,000 features have been sourced from the Kenyan open-data portal. Feature selection is operated via Lasso regression which automatically discards useless or redundant variables. Basic forecasting techniques have been used such as ARIMA and Holt-WInter. 
 
 There is room for further improvement, such as analysis of collineraty etc. However, the goal of the POC was to show a quick demonstrable prototype. 
 
-##Setup 
+<h3>Setup </h3>
 Go in the root directory and run: 
 rscript r/scripts/setup.R
 
-##Run Shiny 
+<h3>Run Shiny</h3>
 Go in the root directory and run: 
 rscript run.R
 
